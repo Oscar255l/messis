@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene format=3 uid="uid://doe3ar7at5y4h"]
 
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1_player"]
 
@@ -20,86 +20,86 @@ size = Vector2(48, 8)
 [sub_resource type="RectangleShape2D" id="Shape_DuctCeiling"]
 size = Vector2(140, 98)
 
-[node name="TestRoom" type="Node2D"]
+[node name="TestRoom" type="Node2D" unique_id=951271740]
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=95743104]
 offset_left = -400.0
 offset_top = -400.0
 offset_right = 900.0
 offset_bottom = 200.0
 color = Color(0.06, 0.07, 0.09, 1)
 
-[node name="Floor" type="StaticBody2D" parent="."]
+[node name="Floor" type="StaticBody2D" parent="." unique_id=665059513]
 position = Vector2(-200, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-position = Vector2(400.0, 60.0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=2063683001]
+position = Vector2(400, 60)
 shape = SubResource("Shape_Floor")
 
-[node name="ColorRect" type="ColorRect" parent="Floor"]
+[node name="ColorRect" type="ColorRect" parent="Floor" unique_id=878768813]
 offset_right = 800.0
 offset_bottom = 120.0
 color = Color(0.22, 0.25, 0.3, 1)
 
-[node name="WallLeft" type="StaticBody2D" parent="."]
+[node name="WallLeft" type="StaticBody2D" parent="." unique_id=1773781227]
 position = Vector2(-216, -200)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft"]
-position = Vector2(8.0, 120.0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft" unique_id=1721173318]
+position = Vector2(8, 120)
 shape = SubResource("Shape_WallLeft")
 
-[node name="ColorRect" type="ColorRect" parent="WallLeft"]
+[node name="ColorRect" type="ColorRect" parent="WallLeft" unique_id=294485097]
 offset_right = 16.0
 offset_bottom = 240.0
 color = Color(0.22, 0.25, 0.3, 1)
 
-[node name="WallRight" type="StaticBody2D" parent="."]
+[node name="WallRight" type="StaticBody2D" parent="." unique_id=157403874]
 position = Vector2(600, -200)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight"]
-position = Vector2(8.0, 120.0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight" unique_id=2094316434]
+position = Vector2(8, 120)
 shape = SubResource("Shape_WallRight")
 
-[node name="ColorRect" type="ColorRect" parent="WallRight"]
+[node name="ColorRect" type="ColorRect" parent="WallRight" unique_id=457626727]
 offset_right = 16.0
 offset_bottom = 240.0
 color = Color(0.22, 0.25, 0.3, 1)
 
-[node name="PlatformLow" type="StaticBody2D" parent="."]
+[node name="PlatformLow" type="StaticBody2D" parent="." unique_id=1741279374]
 position = Vector2(60, -30)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformLow"]
-position = Vector2(24.0, 4.0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformLow" unique_id=621441416]
+position = Vector2(24, 4)
 shape = SubResource("Shape_PlatformLow")
 
-[node name="ColorRect" type="ColorRect" parent="PlatformLow"]
+[node name="ColorRect" type="ColorRect" parent="PlatformLow" unique_id=2116856994]
 offset_right = 48.0
 offset_bottom = 8.0
 color = Color(0.22, 0.25, 0.3, 1)
 
-[node name="PlatformHigh" type="StaticBody2D" parent="."]
+[node name="PlatformHigh" type="StaticBody2D" parent="." unique_id=2138127249]
 position = Vector2(140, -62)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformHigh"]
-position = Vector2(24.0, 4.0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformHigh" unique_id=1594861683]
+position = Vector2(24, 4)
 shape = SubResource("Shape_PlatformHigh")
 
-[node name="ColorRect" type="ColorRect" parent="PlatformHigh"]
+[node name="ColorRect" type="ColorRect" parent="PlatformHigh" unique_id=1514258935]
 offset_right = 48.0
 offset_bottom = 8.0
 color = Color(0.22, 0.25, 0.3, 1)
 
-[node name="DuctCeiling" type="StaticBody2D" parent="."]
+[node name="DuctCeiling" type="StaticBody2D" parent="." unique_id=238778100]
 position = Vector2(300, -120)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DuctCeiling"]
-position = Vector2(70.0, 49.0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DuctCeiling" unique_id=776543219]
+position = Vector2(70, 49)
 shape = SubResource("Shape_DuctCeiling")
 
-[node name="ColorRect" type="ColorRect" parent="DuctCeiling"]
+[node name="ColorRect" type="ColorRect" parent="DuctCeiling" unique_id=1796908452]
 offset_right = 140.0
 offset_bottom = 98.0
 color = Color(0.22, 0.25, 0.3, 1)
 
-[node name="Player" parent="." instance=ExtResource("1_player")]
+[node name="Player" parent="." unique_id=570782165 instance=ExtResource("1_player")]
 position = Vector2(-120, 0)

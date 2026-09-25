@@ -32,6 +32,10 @@ var walk_timer := 0.0
 # @onready busca los nodos hijos cuando la escena ya está lista.
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collision: CollisionShape2D = $CollisionShape2D
+@onready var flashlight: PointLight2D = $Flashlight
+
+# Hacia dónde mira Gabriel: 1 = derecha, -1 = izquierda.
+var facing := 1
 
 
 # _physics_process se ejecuta 60 veces por segundo. Aquí va todo el movimiento.
@@ -44,6 +48,13 @@ func _physics_process(delta: float) -> void:
 	# move_and_slide mueve al personaje usando "velocity" y lo detiene contra paredes y suelo.
 	move_and_slide()
 	update_sprite(delta)
+	update_flashlight()
+
+
+# _unhandled_input recibe teclas "de una sola vez" (presionar y soltar).
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("flashlight"):
+		flashlight.enabled = not flashlight.enabled
 
 
 func apply_gravity(delta: float) -> void:
@@ -121,6 +132,15 @@ func update_sprite(delta: float) -> void:
 		walk_timer = 0.0
 	# Voltear el dibujo según hacia dónde camina.
 	if velocity.x < 0.0:
-		sprite.flip_h = true
+		facing = -1
 	elif velocity.x > 0.0:
-		sprite.flip_h = false
+		facing = 1
+	sprite.flip_h = facing == -1
+
+
+func update_flashlight() -> void:
+	# La linterna va en el hombro: se mueve de lado y baja al agacharse.
+	flashlight.position.x = 5.0 * facing
+	flashlight.position.y = -9.0 if is_crouching else -17.0
+	# Girarla 180 grados cuando mira a la izquierda.
+	flashlight.rotation = 0.0 if facing == 1 else PI
