@@ -37,6 +37,9 @@ var walk_timer := 0.0
 # Hacia dónde mira Gabriel: 1 = derecha, -1 = izquierda.
 var facing := 1
 
+# Objeto con el que Gabriel puede interactuar ahora mismo (puerta, terminal...).
+var current_interactable: Interactable = null
+
 
 # _physics_process se ejecuta 60 veces por segundo. Aquí va todo el movimiento.
 func _physics_process(delta: float) -> void:
@@ -55,6 +58,19 @@ func _physics_process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("flashlight"):
 		flashlight.enabled = not flashlight.enabled
+	elif event.is_action_pressed("interact") and is_instance_valid(current_interactable):
+		current_interactable.interact(self)
+		get_viewport().set_input_as_handled()
+
+
+# Las zonas de interacción llaman a estas dos funciones cuando Gabriel entra o sale.
+func set_interactable(zone: Interactable) -> void:
+	current_interactable = zone
+
+
+func clear_interactable(zone: Interactable) -> void:
+	if current_interactable == zone:
+		current_interactable = null
 
 
 func apply_gravity(delta: float) -> void:

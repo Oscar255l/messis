@@ -1,0 +1,58 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/objects/door.gd" id="door_script"]
+[ext_resource type="Texture2D" path="res://assets/objects/door_frame.png" id="frame_tex"]
+[ext_resource type="Texture2D" path="res://assets/objects/door_panel.png" id="panel_tex"]
+[ext_resource type="Texture2D" path="res://assets/objects/indicator.png" id="ind_tex"]
+[ext_resource type="Script" path="res://scripts/interactable.gd" id="zone_script"]
+[ext_resource type="Texture2D" path="res://assets/objects/prompt_e.png" id="prompt_tex"]
+[ext_resource type="Texture2D" path="res://assets/lights/light_radial.png" id="glow_tex"]
+
+[sub_resource type="RectangleShape2D" id="DoorShape"]
+size = Vector2(10, 48)
+
+[sub_resource type="RectangleShape2D" id="ZoneShape"]
+size = Vector2(44, 40)
+
+[node name="Door" type="StaticBody2D"]
+z_index = -1
+script = ExtResource("door_script")
+
+[node name="Frame" type="Sprite2D" parent="."]
+texture = ExtResource("frame_tex")
+centered = false
+offset = Vector2(-8, -48)
+
+[node name="Panel" type="Sprite2D" parent="."]
+texture = ExtResource("panel_tex")
+centered = false
+offset = Vector2(-6, -44)
+
+[node name="Indicator" type="Sprite2D" parent="."]
+texture = ExtResource("ind_tex")
+centered = false
+offset = Vector2(-2, -47)
+
+[node name="IndicatorLight" type="PointLight2D" parent="."]
+position = Vector2(0, -46)
+energy = 0.9
+texture = ExtResource("glow_tex")
+texture_scale = 0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -24)
+shape = SubResource("DoorShape")
+
+[node name="InteractZone" type="Area2D" parent="."]
+script = ExtResource("zone_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractZone"]
+position = Vector2(0, -20)
+shape = SubResource("ZoneShape")
+
+[node name="Prompt" type="Sprite2D" parent="InteractZone"]
+z_index = 5
+position = Vector2(0, -30)
+texture = ExtResource("prompt_tex")
+centered = false
+offset = Vector2(-4, -9)

@@ -1,0 +1,40 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/objects/log_object.gd" id="log_script"]
+[ext_resource type="Texture2D" path="res://assets/objects/datapad.png" id="obj_tex"]
+[ext_resource type="Script" path="res://scripts/interactable.gd" id="zone_script"]
+[ext_resource type="Texture2D" path="res://assets/objects/prompt_e.png" id="prompt_tex"]
+[ext_resource type="Texture2D" path="res://assets/lights/light_radial.png" id="glow_tex"]
+
+[sub_resource type="RectangleShape2D" id="ZoneShape"]
+size = Vector2(24, 28)
+
+[node name="Datapad" type="Node2D"]
+script = ExtResource("log_script")
+log_id = "LOG_02"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("obj_tex")
+centered = false
+offset = Vector2(-5, -5)
+
+[node name="Glow" type="PointLight2D" parent="."]
+position = Vector2(0, -4)
+color = Color(0.3, 0.8, 0.85, 1)
+energy = 0.8
+texture = ExtResource("glow_tex")
+texture_scale = 0.25
+
+[node name="InteractZone" type="Area2D" parent="."]
+script = ExtResource("zone_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractZone"]
+position = Vector2(0, -12)
+shape = SubResource("ZoneShape")
+
+[node name="Prompt" type="Sprite2D" parent="InteractZone"]
+z_index = 5
+position = Vector2(0, -12)
+texture = ExtResource("prompt_tex")
+centered = false
+offset = Vector2(-4, -9)

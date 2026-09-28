@@ -1,0 +1,25 @@
+[remap]
+
+importer="font_data_image"
+type="FontFile"
+uid="uid://i84hsfaisuxr"
+path="res://.godot/imported/messis_font.png-bfc0b2a4aa7ad461c23f8f183b0458cb.fontdata"
+
+[deps]
+
+source_file="res://assets/fonts/messis_font.png"
+dest_files=["res://.godot/imported/messis_font.png-bfc0b2a4aa7ad461c23f8f183b0458cb.fontdata"]
+
+[params]
+
+character_ranges=PackedStringArray("32-126", "225", "233", "237", "243", "250", "241", "209", "191", "161", "252", "193", "201", "205", "211", "218")
+kerning_pairs=PackedStringArray()
+columns=16
+rows=7
+image_margin=Rect2i(0, 0, 0, 0)
+character_margin=Rect2i(0, 0, 0, 0)
+ascent=0
+descent=0
+fallbacks=[]
+compress=true
+scaling_mode=2

@@ -1,0 +1,10 @@
+keys,en,es
+UI_CLOSE,[E] Close,[E] Cerrar
+MSG_ACCESS_DENIED,ACCESS DENIED - LEVEL %d REQUIRED,ACCESO DENEGADO - SE REQUIERE NIVEL %d
+MSG_KEYCARD,Keycard acquired: security level %d,Tarjeta obtenida: nivel de seguridad %d
+LOG_01_TITLE,TERMINAL - SECURITY SHIFT ORDERS,TERMINAL - ÓRDENES DE TURNO
+LOG_01_BODY,"Night shift: Officer G. Brandt.\nRoutine rounds, sectors A to C.\n\nLab B received asteroid sample AST-7 today. Standard containment protocol.\n\nNothing unusual to report.","Turno nocturno: oficial G. Brandt.\nRondas de rutina, sectores A a C.\n\nEl laboratorio B recibió hoy la muestra de asteroide AST-7. Protocolo de contención estándar.\n\nNada inusual que reportar."
+LOG_02_TITLE,DATAPAD - DR. H. VARGA,DATAPAD - DR. H. VARGA
+LOG_02_BODY,"Surface analysis of AST-7, day 1.\n\nDark fibrous formations inside the fractures. They almost look organic, but it is probably mineral crystallization.\n\nTemperature: -40 C. Stable. No activity.","Análisis de superficie de AST-7, día 1.\n\nFormaciones fibrosas oscuras dentro de las grietas. Casi parecen orgánicas, pero seguramente es cristalización mineral.\n\nTemperatura: -40 C. Estable. Sin actividad."
+LOG_03_TITLE,AUDIO LOG - DR. H. VARGA,GRABACIÓN DE AUDIO - DR. H. VARGA
+LOG_03_BODY,"Day 3. The sample is... warmer. Twelve degrees since last night, and the containment unit is working fine.\n\nThe fibers have grown. I'm sure of it now.\n\nI'm requesting level 2 isolation. If anyone finds my card, keep Lab B sealed.","Día 3. La muestra está... más caliente. Doce grados más desde anoche, y la unidad de contención funciona bien.\n\nLas fibras crecieron. Ahora estoy seguro.\n\nSolicito aislamiento de nivel 2. Si alguien encuentra mi tarjeta, mantenga el laboratorio B sellado."
