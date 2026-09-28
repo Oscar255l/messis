@@ -18,5 +18,6 @@ func _process(_delta: float) -> void:
 
 func _on_interacted(_player: Node) -> void:
 	GameState.grant_access(level)
+	Sfx.play_ui(self, "pickup_card", -4.0)
 	HUD.find(self).show_message(tr("MSG_KEYCARD") % level)
 	queue_free()   # La tarjeta desaparece del mundo

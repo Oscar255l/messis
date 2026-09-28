@@ -30,12 +30,14 @@ func _on_interacted(_player: Node) -> void:
 		open()
 	else:
 		HUD.find(self).show_message(tr("MSG_ACCESS_DENIED") % required_level)
+		Sfx.play_at(self, "door_denied", global_position, -4.0, 0.0)
 		blink_denied()
 
 
 func open() -> void:
 	is_open = true
 	zone.enabled = false
+	Sfx.play_at(self, "door_open", global_position + Vector2(0, -24), 0.0, 0.03)
 	# set_deferred: cambiar la colisión al final del cuadro (Godot lo pide durante la física).
 	collision.set_deferred("disabled", true)
 	update_indicator()

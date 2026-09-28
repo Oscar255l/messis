@@ -68,6 +68,9 @@ var reload_timer := 0.0
 var aim_timer := 0.0          # Tiempo que mantiene el brazo extendido tras disparar
 var shot_noise_timer := 0.0
 var shake := 0.0              # Fuerza del temblor de cámara
+var step_distance := 0.0      # Distancia recorrida desde el último paso (para el sonido)
+var was_on_floor := true
+var fall_speed := 0.0
 
 
 # _enter_tree ocurre antes que _ready: así los enemigos ya pueden encontrar a Gabriel.
@@ -90,9 +93,11 @@ func _physics_process(delta: float) -> void:
 	handle_weapon()
 
 	# move_and_slide mueve al personaje usando "velocity" y lo detiene contra paredes y suelo.
+	fall_speed = velocity.y
 	move_and_slide()
 	update_sprite(delta)
 	update_flashlight()
+	update_footsteps(delta)
 
 
 func _process(delta: float) -> void:
@@ -121,6 +126,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed("flashlight"):
 		flashlight.enabled = not flashlight.enabled
+		Sfx.play_at(self, "flashlight", global_position, -6.0)
 	elif event.is_action_pressed("interact") and is_instance_valid(current_interactable):
 		current_interactable.interact(self)
 		get_viewport().set_input_as_handled()
@@ -155,6 +161,7 @@ func handle_jump() -> void:
 	# No puede saltar agachado ni mientras recibe un golpe.
 	if Input.is_action_just_pressed("jump") and is_on_floor() and not is_crouching and hurt_timer <= 0.0:
 		velocity.y = JUMP_VELOCITY
+		Sfx.play_at(self, "jump", global_position, -8.0)
 
 	# Salto variable: si suelta la tecla mientras sube, sube menos.
 	if Input.is_action_just_released("jump") and velocity.y < 0.0:
@@ -217,6 +224,7 @@ func shoot() -> void:
 		if GameState.ammo_reserve > 0:
 			start_reload()
 		else:
+			Sfx.play_at(self, "empty", global_position, -4.0)
 			HUD.find(self).show_message(tr("MSG_NO_AMMO"))
 		return
 
@@ -242,6 +250,7 @@ func shoot() -> void:
 
 	spawn_tracer(origin, end)
 	flash_muzzle()
+	Sfx.play_at(self, "shot", global_position, -3.0, 0.05)
 
 
 func spawn_tracer(from: Vector2, to: Vector2) -> void:
@@ -268,6 +277,7 @@ func start_reload() -> void:
 	if reload_timer > 0.0 or GameState.ammo_reserve <= 0 or GameState.ammo_clip >= GameState.CLIP_SIZE:
 		return
 	reload_timer = RELOAD_TIME
+	Sfx.play_at(self, "reload", global_position, -2.0, 0.0)
 	HUD.find(self).show_message(tr("MSG_RELOADING"))
 
 
@@ -295,6 +305,8 @@ func take_damage(amount: int, from_x: float) -> void:
 	velocity = Vector2(push_dir * 140.0, -90.0)
 	if health <= 0:
 		die()
+	else:
+		Sfx.play_at(self, "player_hurt", global_position)
 
 
 func die() -> void:
@@ -302,11 +314,34 @@ func die() -> void:
 	sprite.frame = FRAME_CROUCH
 	sprite.modulate = Color(0.6, 0.3, 0.3)
 	flashlight.enabled = false
+	Sfx.play_ui(self, "player_death")
 	HUD.find(self).show_death()
 	await get_tree().create_timer(3.0).timeout
 	# Volver al último punto de control y recargar el nivel.
 	GameState.load_checkpoint()
 	get_tree().reload_current_scene()
+
+
+## Pasos: suena uno cada cierta distancia recorrida en el piso.
+## Correr suena más fuerte; agachado casi no se oye (igual que el "ruido" que oyen los enemigos).
+func update_footsteps(delta: float) -> void:
+	var on_floor := is_on_floor()
+	if on_floor and not was_on_floor and fall_speed > 120.0:
+		Sfx.play_at(self, "land", global_position, -8.0)
+		step_distance = 0.0
+	was_on_floor = on_floor
+	if not on_floor:
+		return
+	step_distance += absf(velocity.x) * delta
+	var stride := 15.0
+	if step_distance >= stride:
+		step_distance = 0.0
+		var volume := -10.0
+		if is_crouching:
+			volume = -24.0
+		elif absf(velocity.x) > WALK_SPEED + 5.0:
+			volume = -4.0
+		Sfx.play_at(self, "step_%d" % randi_range(1, 4), global_position, volume)
 
 
 ## Qué tan lejos se escucha a Gabriel ahora mismo.

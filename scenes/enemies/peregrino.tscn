@@ -20,3 +20,8 @@ hframes = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -12)
 shape = SubResource("Body")
+
+[node name="FeedSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -8)
+volume_db = -2.0
+max_distance = 380.0

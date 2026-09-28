@@ -17,6 +17,8 @@ func _on_interacted(_player: Node) -> void:
 	GameState.ammo_clip = starting_clip
 	GameState.ammo_reserve = starting_reserve
 	sprite.frame = 1          # Casillero abierto y vacío
+	Sfx.play_at(self, "locker_open", global_position)
+	Sfx.play_ui(self, "pickup_gun", -4.0)
 	zone.enabled = false
 	var hud := HUD.find(self)
 	hud.update_ammo()

@@ -16,6 +16,7 @@ const BAR_WIDTH := 40.0
 
 var message_tween: Tween
 var type_tween: Tween
+var last_visible_chars := 0
 
 
 ## Cualquier objeto puede encontrar el HUD con: HUD.find(self)
@@ -70,6 +71,8 @@ func show_log(title_key: String, body_key: String) -> void:
 	log_body.text = tr(body_key)
 	log_body.visible_ratio = 0.0
 	log_panel.show()
+	last_visible_chars = 0
+	Sfx.play_ui(self, "ui_open")
 	get_tree().paused = true
 	if type_tween:
 		type_tween.kill()
@@ -77,7 +80,17 @@ func show_log(title_key: String, body_key: String) -> void:
 	type_tween.tween_property(log_body, "visible_ratio", 1.0, log_body.text.length() / TYPE_SPEED)
 
 
+func _process(_delta: float) -> void:
+	# Un "tic" suave cada pocas letras mientras se escribe el registro.
+	if log_panel.visible and log_body.visible_ratio < 1.0:
+		var chars := log_body.get_total_character_count() * log_body.visible_ratio
+		if int(chars) - last_visible_chars >= 3:
+			last_visible_chars = int(chars)
+			Sfx.play_ui(self, "type_tick", -6.0)
+
+
 func close_log() -> void:
+	Sfx.play_ui(self, "ui_close")
 	log_panel.hide()
 	get_tree().paused = false
 

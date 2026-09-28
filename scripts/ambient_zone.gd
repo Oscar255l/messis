@@ -4,6 +4,7 @@ extends Area2D
 
 @export var ambient_color := Color(0.12, 0.13, 0.18)
 @export var hint_key := ""   # Mensaje de ayuda opcional que aparece la primera vez
+@export var ambience := ""   # Sonido de fondo de esta zona (archivo en assets/audio/ambience)
 
 var hint_shown := false
 
@@ -14,7 +15,7 @@ func _ready() -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
-		get_tree().call_group("level", "set_ambient", ambient_color)
+		get_tree().call_group("level", "set_ambient", ambient_color, ambience)
 		if hint_key != "" and not hint_shown:
 			hint_shown = true
 			HUD.find(self).show_message(tr(hint_key))

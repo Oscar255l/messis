@@ -31,13 +31,18 @@ var facing := 1
 var anim_time := 0.0
 var attack_landed := false
 var player: Node2D
+var step_timer := 0.0
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var feed_sound: AudioStreamPlayer2D = $FeedSound
 
 
 func _ready() -> void:
 	health = max_health
 	facing = start_facing
+	# Sonido de "comer" en bucle mientras se alimenta.
+	feed_sound.stream = Sfx.load_loop("res://assets/audio/sfx/peregrino_feed.wav")
+	feed_sound.play()
 	add_to_group("enemies")
 	player = get_tree().get_first_node_in_group("player")
 
@@ -55,6 +60,8 @@ func _physics_process(delta: float) -> void:
 			sprite.frame = 0
 			if can_hear_player():
 				change_state(State.ALERT, 0.6)
+				feed_sound.stop()
+				Sfx.play_at(self, "peregrino_scream", global_position, 0.0, 0.05)
 		State.ALERT:
 			velocity.x = 0.0
 			face_player()
@@ -87,9 +94,14 @@ func process_chase(delta: float) -> void:
 	velocity.x = facing * speed
 	anim_time += delta * RUN_ANIM_FPS
 	sprite.frame = 1 + int(anim_time) % 4
+	step_timer -= delta
+	if step_timer <= 0.0:
+		step_timer = 0.2
+		Sfx.play_at(self, "peregrino_step_%d" % randi_range(1, 3), global_position, -6.0)
 	if distance_to_player() < ATTACK_RANGE:
 		attack_landed = false
 		change_state(State.ATTACK, ATTACK_WINDUP + ATTACK_RECOVERY)
+		Sfx.play_at(self, "peregrino_attack", global_position)
 
 
 func process_attack(delta: float) -> void:
@@ -120,6 +132,10 @@ func distance_to_player() -> float:
 	return global_position.distance_to(player.global_position)
 
 
+func _exit_tree() -> void:
+	feed_sound.stop()
+
+
 func face_player() -> void:
 	facing = 1 if player.global_position.x > global_position.x else -1
 
@@ -131,9 +147,13 @@ func take_hit(damage: int, direction: int) -> void:
 	health -= damage
 	velocity.x = direction * 70.0
 	flash()
+	if state == State.FEEDING:
+		# Un disparo lo despierta aunque no haya oído nada antes.
+		feed_sound.stop()
 	if health <= 0:
 		die()
 	else:
+		Sfx.play_at(self, "peregrino_hurt", global_position)
 		change_state(State.STAGGER, 0.25)
 
 
@@ -146,5 +166,7 @@ func flash() -> void:
 
 func die() -> void:
 	change_state(State.DEAD)
+	feed_sound.stop()
+	Sfx.play_at(self, "peregrino_death", global_position)
 	# Quitarlo de la capa de colisión de enemigos: las balas lo atraviesan.
 	set_collision_layer_value(2, false)
