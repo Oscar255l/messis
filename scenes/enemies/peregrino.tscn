@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/peregrino.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/peregrino.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="Body"]
+size = Vector2(10, 24)
+
+[node name="Peregrino" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tex")
+centered = false
+offset = Vector2(-16, -30)
+hframes = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+shape = SubResource("Body")

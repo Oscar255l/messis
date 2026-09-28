@@ -8,3 +8,12 @@ LOG_02_TITLE,DATAPAD - DR. H. VARGA,DATAPAD - DR. H. VARGA
 LOG_02_BODY,"Surface analysis of AST-7, day 1.\n\nDark fibrous formations inside the fractures. They almost look organic, but it is probably mineral crystallization.\n\nTemperature: -40 C. Stable. No activity.","Análisis de superficie de AST-7, día 1.\n\nFormaciones fibrosas oscuras dentro de las grietas. Casi parecen orgánicas, pero seguramente es cristalización mineral.\n\nTemperatura: -40 C. Estable. Sin actividad."
 LOG_03_TITLE,AUDIO LOG - DR. H. VARGA,GRABACIÓN DE AUDIO - DR. H. VARGA
 LOG_03_BODY,"Day 3. The sample is... warmer. Twelve degrees since last night, and the containment unit is working fine.\n\nThe fibers have grown. I'm sure of it now.\n\nI'm requesting level 2 isolation. If anyone finds my card, keep Lab B sealed.","Día 3. La muestra está... más caliente. Doce grados más desde anoche, y la unidad de contención funciona bien.\n\nLas fibras crecieron. Ahora estoy seguro.\n\nSolicito aislamiento de nivel 2. Si alguien encuentra mi tarjeta, mantenga el laboratorio B sellado."
+MSG_PISTOL,"Pistol acquired - [J] shoot, [R] reload","Pistola obtenida - [J] disparar, [R] recargar"
+MSG_RELOADING,Reloading...,Recargando...
+MSG_NO_AMMO,Out of ammo,Sin munición
+MSG_DEAD,YOU DIED,HAS MUERTO
+MSG_END_DEMO,END OF THE CHAPTER 1 DEMO - TO BE CONTINUED,FIN DE LA DEMO DEL CAPÍTULO 1 - CONTINUARÁ
+LOG_PHOTO_TITLE,"PHOTO - CARNAVAL, PASTO","FOTO - CARNAVAL, PASTO"
+LOG_PHOTO_BODY,"Mom, Dad and me at the Carnaval de Negros y Blancos in Pasto. I was seven. Dad got covered in talc and Mom couldn't stop laughing.\n\nEvery time the heating fails on this station I can hear her:\n""Achichay, mijo. Abríguese.""","Mamá, papá y yo en el Carnaval de Negros y Blancos, en Pasto. Tenía siete años. A papá lo llenaron de talco y mamá no paraba de reírse.\n\nCada vez que falla la calefacción en esta estación, la escucho:\n""Achichay, mijo. Abríguese."""
+MSG_HINT_FLASHLIGHT,No power here... [F] flashlight,Aquí no hay energía... [F] linterna
+MSG_HINT_CROUCH,Hold [S] to crouch,Mantén [S] para agacharte

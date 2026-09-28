@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/objects/gun_locker.gd" id="locker_script"]
+[ext_resource type="Texture2D" path="res://assets/props/gun_locker.png" id="locker_tex"]
+[ext_resource type="Script" path="res://scripts/interactable.gd" id="zone_script"]
+[ext_resource type="Texture2D" path="res://assets/objects/prompt_e.png" id="prompt_tex"]
+
+[sub_resource type="RectangleShape2D" id="ZoneShape"]
+size = Vector2(28, 30)
+
+[node name="GunLocker" type="Node2D"]
+z_index = -1
+script = ExtResource("locker_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("locker_tex")
+centered = false
+offset = Vector2(-8, -30)
+hframes = 2
+
+[node name="InteractZone" type="Area2D" parent="."]
+script = ExtResource("zone_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractZone"]
+position = Vector2(0, -15)
+shape = SubResource("ZoneShape")
+
+[node name="Prompt" type="Sprite2D" parent="InteractZone"]
+z_index = 5
+position = Vector2(0, -34)
+texture = ExtResource("prompt_tex")
+centered = false
+offset = Vector2(-4, -9)

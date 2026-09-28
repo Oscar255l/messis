@@ -1,13 +1,18 @@
 class_name HUD
 extends CanvasLayer
-## Interfaz en pantalla: mensajes cortos y el lector de registros de la historia.
+## Interfaz en pantalla: vida, munición, mensajes cortos, lector de registros y pantalla de muerte.
 
 const TYPE_SPEED := 60.0   # Letras por segundo del efecto "máquina de escribir"
+const BAR_WIDTH := 40.0
 
 @onready var message: Label = $Root/Message
 @onready var log_panel: Panel = $Root/LogPanel
 @onready var log_title: Label = $Root/LogPanel/Title
 @onready var log_body: Label = $Root/LogPanel/Body
+@onready var health_fill: ColorRect = $Root/Health/Fill
+@onready var ammo_label: Label = $Root/Ammo
+@onready var death_overlay: ColorRect = $Root/DeathOverlay
+@onready var death_label: Label = $Root/DeathOverlay/Label
 
 var message_tween: Tween
 var type_tween: Tween
@@ -24,6 +29,29 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	log_panel.hide()
 	message.modulate.a = 0.0
+	death_overlay.modulate.a = 0.0
+	death_overlay.hide()
+	# call_deferred: esperar a que todo el nivel esté listo antes de leer los datos del jugador.
+	refresh.call_deferred()
+
+
+func refresh() -> void:
+	var player := get_tree().get_first_node_in_group("player")
+	if player:
+		update_health(player.health, player.MAX_HEALTH)
+	update_ammo()
+
+
+func update_health(value: int, max_value: int) -> void:
+	var ratio := float(value) / float(max_value)
+	health_fill.size.x = round(BAR_WIDTH * ratio)
+	# Verde cuando está bien, rojo cuando está grave.
+	health_fill.color = Color(0.85, 0.2, 0.15) if ratio <= 0.3 else Color(0.35, 0.8, 0.45)
+
+
+func update_ammo() -> void:
+	ammo_label.visible = GameState.has_pistol
+	ammo_label.text = "%d / %d" % [GameState.ammo_clip, GameState.ammo_reserve]
 
 
 func show_message(text: String) -> void:
@@ -52,6 +80,12 @@ func show_log(title_key: String, body_key: String) -> void:
 func close_log() -> void:
 	log_panel.hide()
 	get_tree().paused = false
+
+
+func show_death() -> void:
+	death_label.text = tr("MSG_DEAD")
+	death_overlay.show()
+	create_tween().tween_property(death_overlay, "modulate:a", 1.0, 1.5)
 
 
 func _unhandled_input(event: InputEvent) -> void:

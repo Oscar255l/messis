@@ -15,7 +15,7 @@ script = ExtResource("1_script")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_tex")
 offset = Vector2(0, -14)
-hframes = 7
+hframes = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -13)
@@ -27,6 +27,7 @@ position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 
 [node name="Flashlight" type="PointLight2D" parent="."]
+enabled = false
 position = Vector2(5, -17)
 color = Color(1, 0.95, 0.82, 1)
 energy = 1.2
@@ -40,3 +41,11 @@ color = Color(0.55, 0.65, 0.9, 1)
 energy = 0.35
 texture = ExtResource("4_glow")
 texture_scale = 0.7
+
+[node name="MuzzleFlash" type="PointLight2D" parent="."]
+enabled = false
+position = Vector2(12, -14)
+color = Color(1, 0.8, 0.45, 1)
+energy = 1.6
+texture = ExtResource("4_glow")
+texture_scale = 0.8
